@@ -37,3 +37,11 @@ class AuthSystem:
             except Exception as e:
                 print(f"Error loading credentials: {e}")
                 return {}
+    def save_credentials(self, credentials):
+        try:
+            with open(self._credentials_file, 'w') as f:
+                json.dump(credentials, f, indent=4)
+            return True
+        except Exception as e:
+            print(f"Error saving credentials: {e}")
+            return False
