@@ -60,3 +60,33 @@ class AuthSystem:
         self._current_user = None
         self._current_role = None
         print("\nLogged out successfully!")
+    
+    def is_logged_in(self):
+        return self._current_user is not None
+    
+    def get_current_user(self):
+        return self._current_user
+    
+    def get_current_role(self):
+        return self._current_role
+    
+    def is_admin(self):
+        return self._current_role == "admin"
+    
+    def is_librarian(self):
+        return self._current_role == "librarian"
+    
+    def is_member(self):
+        return self._current_role == "member"
+    
+    def can_manage_users(self):
+        return self.is_admin()
+    
+    def can_manage_books(self):
+        return self.is_admin() or self.is_librarian()
+    
+    def can_manage_transactions(self):
+        return self.is_admin() or self.is_librarian()
+    
+    def can_view_reports(self):
+        return self.is_admin() or self.is_librarian()
