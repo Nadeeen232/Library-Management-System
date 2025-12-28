@@ -80,3 +80,11 @@ class Library:
                 return True, "Book updated successfully"
         return False, "Book not found"
 
+    def get_book_by_id(self, book_id):
+        for book in self._books:
+            if book.get_book_id() == book_id:
+                return book
+        return None
+        
+
+
