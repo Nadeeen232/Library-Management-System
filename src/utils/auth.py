@@ -45,3 +45,18 @@ class AuthSystem:
         except Exception as e:
             print(f"Error saving credentials: {e}")
             return False
+    def login(self, username, password):
+        credentials = self.load_credentials()
+        if username in credentials:
+            if credentials[username]["password"] == password:
+                self._current_user = username
+                self._current_role = credentials[username]["role"]
+                print(f"\nLogin successful! Welcome {username} ({self._current_role})")
+                return True
+        print("\nInvalid username or password!")
+        return False
+    
+    def logout(self):
+        self._current_user = None
+        self._current_role = None
+        print("\nLogged out successfully!")
