@@ -1,6 +1,8 @@
 from datetime import datetime
 from utils.validator import Validator
 from utils.search_engine import SearchEngine
+from models.person import Admin, Librarian, Member
+
 
 
 class Library:
@@ -40,6 +42,14 @@ class Library:
     def get_all_transactions(self):
         return self._transactions
 
+
+
+
+
+
+
+
+    
 
     def add_book(self, title, author, isbn, category, publication_year):
         if not Validator.validate_non_empty(title):
@@ -85,6 +95,27 @@ class Library:
             if book.get_book_id() == book_id:
                 return book
         return None
-        
+    def search_books_by_title(self, title):
+        return SearchEngine.search_books_by_title(self._books, title)
+    
+    def search_books_by_author(self, author):
+        return SearchEngine.search_books_by_author(self._books, author)
+    
+    def search_books_by_isbn(self, isbn):
+        return SearchEngine.search_books_by_isbn(self._books, isbn)
+    
+    def search_books_by_category(self, category):
+        return SearchEngine.search_books_by_category(self._books, category)
+    
+    def get_available_books(self):
+        return SearchEngine.search_available_books(self._books)
+    
+    def get_borrowed_books(self):
+        return SearchEngine.search_borrowed_books(self._books)
+
+
+
+
+
 
 
