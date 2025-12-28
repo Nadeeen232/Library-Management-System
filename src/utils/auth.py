@@ -112,4 +112,4 @@ class AuthSystem:
         del credentials[username]
         if self.save_credentials(credentials):
             return True, "User credentials removed successfully"
-        return False, "Failed to save credentials"
+        return False, "Failed to save credentials."
