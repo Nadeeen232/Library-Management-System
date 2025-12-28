@@ -84,6 +84,28 @@ class AuthSystem:
     
     def can_manage_books(self):
         return self.is_admin() or self.is_librarian()
+    def add_user_credentials(self, username, password, role, user_id):
+        credentials = self.load_credentials()
+        if username in credentials:
+            return False, "Username already exists."
+        credentials[username] = {
+            "username": username,
+            "password": password,
+            "role": role,
+            "user_id": user_id
+        }
+        if self.save_credentials(credentials):
+            return True, "User credentials added successfully."
+        return False, "Failed to save credentials."
+    
+    def remove_user_credentials(self, username):
+        credentials = self.load_credentials()
+        if username not in credentials:
+            return False, "Username not found."
+        del credentials[username]
+        if self.save_credentials(credentials):
+            return True, "User credentials removed successfully."
+        return False, "Failed to save credentials."
     
     def can_manage_transactions(self):
         return self.is_admin() or self.is_librarian()
