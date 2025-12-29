@@ -1,0 +1,57 @@
+[
+    {
+        "book_id": 1,
+        "title": "Book1",
+        "author": "Mohamed",
+        "isbn": "1-234-56789-0",
+        "category": "Art",
+        "publication_year": "2000",
+        "is_available": false,
+        "borrower_id": 1,
+        "total_borrows": 1
+    },
+    {
+        "book_id": 2,
+        "title": "Book2",
+        "author": "Mohamed",
+        "isbn": "1-234-56559-0",
+        "category": "Science",
+        "publication_year": "2001",
+        "is_available": true,
+        "borrower_id": null,
+        "total_borrows": 0
+    },
+    {
+        "book_id": 3,
+        "title": "Book3",
+        "author": "Mohamed",
+        "isbn": "1-234-56339-0",
+        "category": "Politics",
+        "publication_year": "2002",
+        "is_available": true,
+        "borrower_id": null,
+        "total_borrows": 0
+    },
+    {
+        "book_id": 4,
+        "title": "Book4",
+        "author": "Mohamed",
+        "isbn": "1-234-56669-0",
+        "category": "Art",
+        "publication_year": "2005",
+        "is_available": true,
+        "borrower_id": null,
+        "total_borrows": 0
+    },
+    {
+        "book_id": 5,
+        "title": "Book5",
+        "author": "Mohamed",
+        "isbn": "1-234-57779-0",
+        "category": "Politics",
+        "publication_year": "2004",
+        "is_available": true,
+        "borrower_id": null,
+        "total_borrows": 0
+    }
+]

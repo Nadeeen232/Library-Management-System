@@ -1,0 +1,12 @@
+[
+    {
+        "transaction_id": 1,
+        "book_id": 1,
+        "member_id": 1,
+        "transaction_type": "borrow",
+        "transaction_date": "2025-12-26",
+        "due_date": "2026-01-09",
+        "return_date": null,
+        "fine_amount": 0.0
+    }
+]

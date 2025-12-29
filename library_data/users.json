@@ -1,0 +1,44 @@
+[
+    {
+        "person_id": 1,
+        "name": "Rawnaa",
+        "email": "Rawnaa@gmail.com",
+        "phone": "01224667254",
+        "is_active": true,
+        "role": "member",
+        "membership_date": "2025-12-26",
+        "borrowed_books": [
+            1
+        ],
+        "fine_amount": 0.0,
+        "max_books": 5
+    },
+    {
+        "person_id": 2,
+        "name": "Mohamed",
+        "email": "Mohamed@gmail.com",
+        "phone": "01003914985",
+        "is_active": true,
+        "role": "admin",
+        "admin_level": "1",
+        "permissions": [
+            "add_user",
+            "delete_user",
+            "add_book",
+            "delete_book",
+            "view_reports"
+        ]
+    },
+    {
+        "person_id": 3,
+        "name": "Rawnaa",
+        "email": "Rawnaa@gmail.com",
+        "phone": "01001431968",
+        "is_active": true,
+        "role": "member",
+        "membership_date": "2025-12-27",
+        "borrowed_books": [],
+        "fine_amount": 0.0,
+        "max_books": 5
+    }
+]
