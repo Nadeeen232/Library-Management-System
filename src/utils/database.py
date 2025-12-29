@@ -81,3 +81,43 @@ class Database:
             import traceback
             traceback.print_exc()
             return []
+    def save_books(self, books):
+        try:
+            with open(self._books_file, 'w') as f:
+                json.dump([book.to_dict() for book in books], f, indent=4)
+            print(f"Saved {len(books)} books to {self._books_file}")
+            return True
+        except Exception as e:
+            print(f"Error saving books: {e}")
+            return False
+    
+    def load_books(self):
+        try:
+            if os.path.exists(self._books_file):
+                with open(self._books_file, 'r') as f:
+                    data = json.load(f)
+                    books = []
+                    for book_data in data:
+                        book = Book(
+                            book_data['book_id'],
+                            book_data['title'],
+                            book_data['author'],
+                            book_data['isbn'],
+                            book_data['category'],
+                            book_data['publication_year']
+                        )
+                        book.set_is_available(book_data.get('is_available', True))
+                        book.set_borrower_id(book_data.get('borrower_id'))
+                        book._total_borrows = book_data.get('total_borrows', 0)
+                        books.append(book)
+                    print(f"Loaded {len(books)} books from {self._books_file}")
+                    return books
+            else:
+                print(f"No books file found at {self._books_file}")
+            return []
+        except Exception as e:
+            print(f"Error loading books: {e}")
+            import traceback
+            traceback.print_exc()
+            return []
+
