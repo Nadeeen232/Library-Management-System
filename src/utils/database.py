@@ -120,4 +120,42 @@ class Database:
             import traceback
             traceback.print_exc()
             return []
+    def save_transactions(self, transactions):
+        try:
+            with open(self._transactions_file, 'w') as f:
+                json.dump([trans.to_dict() for trans in transactions], f, indent=4)
+            print(f"Saved {len(transactions)} transactions to {self._transactions_file}")
+            return True
+        except Exception as e:
+            print(f"Error saving transactions: {e}")
+            return False
+    
+    def load_transactions(self):
+        try:
+            if os.path.exists(self._transactions_file):
+                with open(self._transactions_file, 'r') as f:
+                    data = json.load(f)
+                    transactions = []
+                    for trans_data in data:
+                        trans = Transaction(
+                            trans_data['transaction_id'],
+                            trans_data['book_id'],
+                            trans_data['member_id'],
+                            trans_data['transaction_type'],
+                            trans_data['transaction_date']
+                        )
+                        trans.set_due_date(trans_data.get('due_date'))
+                        trans.set_return_date(trans_data.get('return_date'))
+                        trans.set_fine_amount(trans_data.get('fine_amount', 0.0))
+                        transactions.append(trans)
+                    print(f"Loaded {len(transactions)} transactions from {self._transactions_file}")
+                    return transactions
+            else:
+                print(f"No transactions file found at {self._transactions_file}")
+            return []
+        except Exception as e:
+            print(f"Error loading transactions: {e}")
+            import traceback
+            traceback.print_exc()
+            return []
 
