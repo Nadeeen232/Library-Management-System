@@ -1,9 +1,11 @@
 from datetime import datetime
+from models.person import Admin, Librarian, Member
 from models.book import Book
+from models.transaction import BorrowTransaction, ReturnTransaction
+from utils.database import Database
 from utils.validator import Validator
 from utils.search_engine import SearchEngine
-from models.person import Admin, Librarian, Member
-
+from utils.report_generator import ReportGenerator
 
 
 class Library:
@@ -32,23 +34,7 @@ class Library:
         self._database.save_books(self._books)
         self._database.save_users(self._users)
         self._database.save_transactions(self._transactions)
-
-
-    def get_all_books(self):
-        return self._books
     
-    def get_all_users(self):
-        return self._users
-    
-    def get_all_transactions(self):
-        return self._transactions
-
-
-
-
-
-    
-
     def add_book(self, title, author, isbn, category, publication_year):
         if not Validator.validate_non_empty(title):
             return False, "Title cannot be empty"
@@ -87,36 +73,16 @@ class Library:
                 self.save_all_data()
                 return True, "Book updated successfully"
         return False, "Book not found"
-
+    
+    def get_all_books(self):
+        return self._books
+    
     def get_book_by_id(self, book_id):
         for book in self._books:
             if book.get_book_id() == book_id:
                 return book
         return None
-    def search_books_by_title(self, title):
-        return SearchEngine.search_books_by_title(self._books, title)
     
-    def search_books_by_author(self, author):
-        return SearchEngine.search_books_by_author(self._books, author)
-    
-    def search_books_by_isbn(self, isbn):
-        return SearchEngine.search_books_by_isbn(self._books, isbn)
-    
-    def search_books_by_category(self, category):
-        return SearchEngine.search_books_by_category(self._books, category)
-    
-    def get_available_books(self):
-        return SearchEngine.search_available_books(self._books)
-    
-    def get_borrowed_books(self):
-        return SearchEngine.search_borrowed_books(self._books)
-
-    
-
-
-
-    
-
     def add_admin(self, name, email, phone, admin_level):
         if not Validator.validate_email(email):
             return False, "Invalid email format"
@@ -163,32 +129,19 @@ class Library:
                 self.save_all_data()
                 return True, "User removed successfully"
         return False, "User not found"
-
-
+    
+    def get_all_users(self):
+        return self._users
+    
     def get_user_by_id(self, user_id):
         for user in self._users:
             if user.get_person_id() == user_id:
                 return user
         return None
-        
+    
     def get_all_members(self):
         return [user for user in self._users if isinstance(user, Member)]
-
-
-    def search_users_by_name(self, name):
-        return SearchEngine.search_user_by_name(self._users, name)
     
-    def get_members_with_fines(self):
-        return SearchEngine.search_members_with_fines(self._users)
-
-
-
-
-
-
-
-
-
     def borrow_book(self, book_id, member_id, borrow_period=14):
         book = self.get_book_by_id(book_id)
         if not book:
@@ -306,8 +259,52 @@ class Library:
             if book:
                 borrowed_books.append(book)
         return borrowed_books
-
-
-
-
-
+    
+    def search_books_by_title(self, title):
+        return SearchEngine.search_books_by_title(self._books, title)
+    
+    def search_books_by_author(self, author):
+        return SearchEngine.search_books_by_author(self._books, author)
+    
+    def search_books_by_isbn(self, isbn):
+        return SearchEngine.search_books_by_isbn(self._books, isbn)
+    
+    def search_books_by_category(self, category):
+        return SearchEngine.search_books_by_category(self._books, category)
+    
+    def get_available_books(self):
+        return SearchEngine.search_available_books(self._books)
+    
+    def get_borrowed_books(self):
+        return SearchEngine.search_borrowed_books(self._books)
+    
+    def search_users_by_name(self, name):
+        return SearchEngine.search_user_by_name(self._users, name)
+    
+    def get_members_with_fines(self):
+        return SearchEngine.search_members_with_fines(self._users)
+    
+    def generate_most_borrowed_report(self, top_n=10):
+        return ReportGenerator.generate_most_borrowed_books(self._books, top_n)
+    
+    def generate_active_members_report(self):
+        return ReportGenerator.generate_active_members_report(self._users)
+    
+    def generate_overdue_report(self):
+        return ReportGenerator.generate_overdue_books_report(self._transactions, self._books, self._users)
+    
+    def generate_fine_revenue_report(self):
+        return ReportGenerator.generate_fine_revenue_report(self._users)
+    
+    def generate_category_report(self):
+        return ReportGenerator.generate_books_by_category_report(self._books)
+    
+    def get_all_transactions(self):
+        return self._transactions
+    
+    def get_member_transactions(self, member_id):
+        member_transactions = []
+        for trans in self._transactions:
+            if trans.get_member_id() == member_id:
+                member_transactions.append(trans)
+        return member_transactions
