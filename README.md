@@ -303,6 +303,13 @@ Logged in as: admin (Admin)
 - Account information display
 
 ---
+### 📸 Project Screenshots
+
+#### 🔐 Login Interface
+![Login Screen](assets/Login.png)
+
+#### 📊 Admin Dashboard
+![Admin Dashboard](assets/Admin_Dashboard.png)
 
 ## 👥 Team Contributions
 
