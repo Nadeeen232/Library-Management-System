@@ -1,59 +1,68 @@
+# Import required classes for handling dates and time differences
 from datetime import datetime, timedelta
 
-
+# Transaction class represents a borrowing or returning operation in the library system
 class Transaction:
     def __init__(self, transaction_id, book_id, member_id, transaction_type, transaction_date):
+        # Unique ID for the transaction
         self._transaction_id = transaction_id
+        # ID of the book involved in the transaction
         self._book_id = book_id
+        # ID of the member who performed the transaction
         self._member_id = member_id
+        # Type of transaction (e.g., borrow or return)
         self._transaction_type = transaction_type
+        # Date when the transaction occurred
         self._transaction_date = transaction_date
+        # Due date for returning the book (if applicable)
         self._due_date = None
+        # Actual return date of the book
         self._return_date = None
+        # Fine amount calculated for late returns
         self._fine_amount = 0.0
-    
+    # Getter and setter for transaction ID
     def get_transaction_id(self):
         return self._transaction_id
     
     def set_transaction_id(self, transaction_id):
         self._transaction_id = transaction_id
-    
+    # Getter and setter for book ID
     def get_book_id(self):
         return self._book_id
     
     def set_book_id(self, book_id):
         self._book_id = book_id
-    
+    # Getter and setter for member ID
     def get_member_id(self):
         return self._member_id
     
     def set_member_id(self, member_id):
         self._member_id = member_id
-    
+    # Getter and setter for transaction type
     def get_transaction_type(self):
         return self._transaction_type
     
     def set_transaction_type(self, transaction_type):
         self._transaction_type = transaction_type
-    
+    # Getter and setter for transaction date
     def get_transaction_date(self):
         return self._transaction_date
     
     def set_transaction_date(self, transaction_date):
         self._transaction_date = transaction_date
-    
+    # Getter and setter for due date
     def get_due_date(self):
         return self._due_date
     
     def set_due_date(self, due_date):
         self._due_date = due_date
-    
+    # Getter and setter for return date
     def get_return_date(self):
         return self._return_date
     
     def set_return_date(self, return_date):
         self._return_date = return_date
-    
+     # Getter and setter for fine amount
     def get_fine_amount(self):
         return self._fine_amount
     
@@ -166,4 +175,5 @@ class ReturnTransaction(Transaction):
     def to_dict(self):
         data = super().to_dict()
         data['borrow_transaction_id'] = self._borrow_transaction_id
+
         return data
