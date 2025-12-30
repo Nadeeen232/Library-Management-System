@@ -92,6 +92,7 @@ classDiagram
     Library "1" *-- "many" Transaction : Composition
     Transaction --> Book : References
     Transaction --> Member : Involves
+    
 ```
 
 ┌─────────────────────────────────────┐
