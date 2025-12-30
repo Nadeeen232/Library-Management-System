@@ -311,6 +311,9 @@ Logged in as: admin (Admin)
 #### 📊 Admin Dashboard
 ![Admin Dashboard](assets/Admin_Dashboard.png)
 
+#### 🔍 Search Engine 
+![Search Engine](assets/SearchEngine.png)
+
 ## 👥 Team Contributions
 
 | Name                 | Role                   | Core Contributions                                                                 |
