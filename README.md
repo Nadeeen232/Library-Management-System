@@ -92,24 +92,24 @@ classDiagram
     Library "1" *-- "many" Transaction : Composition
     Transaction --> Book : References
     Transaction --> Member : Involves
-    
+
 ```
 
-┌─────────────────────────────────────┐
-│ User Interface (CLI/GUI) │
-├─────────────────────────────────────┤
-│ Authentication & Authorization │
-├─────────────────────────────────────┤
-│ Business Logic (Controllers) │
-├─────────────────────────────────────┤
-│ Data Models (Classes) │
-├─────────────────────────────────────┤
-│ Utilities (Validation, Search) │
-├─────────────────────────────────────┤
-│ Data Storage (JSON) │
-└─────────────────────────────────────┘
-
-````
+```text
+┌──────────────────────────────────────────┐
+│        User Interface (CLI/GUI)          │
+├──────────────────────────────────────────┤
+│      Authentication & Authorization      │
+├──────────────────────────────────────────┤
+│       Business Logic (Controllers)       │
+├──────────────────────────────────────────┤
+│          Data Models (Classes)           │
+├──────────────────────────────────────────┤
+│      Utilities (Validation, Search)      │
+├──────────────────────────────────────────┤
+│           Data Storage (JSON)            │
+└──────────────────────────────────────────┘
+```
 
 ### Key Components:
 
@@ -134,7 +134,7 @@ class Book:
 
     def get_book_id(self):           # Public getter
         return self._book_id
-````
+```
 
 ### 2. Inheritance
 
