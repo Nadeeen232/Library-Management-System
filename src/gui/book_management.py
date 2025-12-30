@@ -19,9 +19,17 @@ class BookManagementFrame(ttk.Frame):
         # Search
         search_frame = ttk.Frame(left_frame)
         search_frame.pack(fill=tk.X, pady=5)
-        ttk.Label(search_frame, text="Search:").pack(side=tk.LEFT)
+        
+        ttk.Label(search_frame, text="Search by:").pack(side=tk.LEFT)
+        self.search_type = ttk.Combobox(search_frame, values=["Title", "Author", "ISBN", "Category"], 
+                                        state="readonly", width=10)
+        self.search_type.set("Title")
+        self.search_type.pack(side=tk.LEFT, padx=5)
+        
         self.search_entry = ttk.Entry(search_frame)
         self.search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+        self.search_entry.bind("<Return>", lambda e: self.search_books())
+        
         ttk.Button(search_frame, text="Search", command=self.search_books).pack(side=tk.LEFT)
         ttk.Button(search_frame, text="Show All", command=self.refresh_book_list).pack(side=tk.LEFT, padx=2)
         
@@ -107,6 +115,8 @@ class BookManagementFrame(ttk.Frame):
     
     def search_books(self):
         search_term = self.search_entry.get().strip()
+        search_type = self.search_type.get()
+        
         if not search_term:
             self.refresh_book_list()
             return
@@ -115,17 +125,32 @@ class BookManagementFrame(ttk.Frame):
         for item in self.tree.get_children():
             self.tree.delete(item)
         
-        # Search by title
-        books = self.library.search_books_by_title(search_term)
-        for book in books:
-            available = "Yes" if book.get_is_available() else "No"
-            self.tree.insert("", tk.END, values=(
-                book.get_book_id(),
-                book.get_title(),
-                book.get_author(),
-                book.get_category(),
-                available
-            ))
+        # Search based on selected type
+        if search_type == "Title":
+            books = self.library.search_books_by_title(search_term)
+        elif search_type == "Author":
+            books = self.library.search_books_by_author(search_term)
+        elif search_type == "ISBN":
+            book = self.library.search_books_by_isbn(search_term)
+            books = [book] if book else []
+        elif search_type == "Category":
+            books = self.library.search_books_by_category(search_term)
+        else:
+            books = []
+        
+        # Display results
+        if books:
+            for book in books:
+                available = "Yes" if book.get_is_available() else "No"
+                self.tree.insert("", tk.END, values=(
+                    book.get_book_id(),
+                    book.get_title(),
+                    book.get_author(),
+                    book.get_category(),
+                    available
+                ))
+        else:
+            messagebox.showinfo("Search Results", f"No books found matching '{search_term}' in {search_type}")
     
     def add_book(self):
         title = self.title_entry.get().strip()
