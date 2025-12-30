@@ -55,9 +55,16 @@ class MemberWindow:
         search_frame = ttk.Frame(frame)
         search_frame.pack(fill=tk.X, padx=10, pady=10)
         
-        ttk.Label(search_frame, text="Search:").pack(side=tk.LEFT)
+        ttk.Label(search_frame, text="Search by:").pack(side=tk.LEFT)
+        self.search_type = ttk.Combobox(search_frame, values=["Title", "Author", "Category"], 
+                                        state="readonly", width=10)
+        self.search_type.set("Title")
+        self.search_type.pack(side=tk.LEFT, padx=5)
+        
         self.search_entry = ttk.Entry(search_frame, width=30)
         self.search_entry.pack(side=tk.LEFT, padx=5)
+        self.search_entry.bind("<Return>", lambda e: self.search_books())
+        
         ttk.Button(search_frame, text="Search", command=self.search_books).pack(side=tk.LEFT)
         ttk.Button(search_frame, text="Show All", command=self.show_all_books).pack(side=tk.LEFT, padx=5)
         
@@ -144,12 +151,21 @@ class MemberWindow:
     
     def search_books(self):
         search_term = self.search_entry.get().strip()
+        search_type = self.search_type.get()
         
         for item in self.search_tree.get_children():
             self.search_tree.delete(item)
         
         if search_term:
-            books = self.library.search_books_by_title(search_term)
+            # Search based on selected type
+            if search_type == "Title":
+                books = self.library.search_books_by_title(search_term)
+            elif search_type == "Author":
+                books = self.library.search_books_by_author(search_term)
+            elif search_type == "Category":
+                books = self.library.search_books_by_category(search_term)
+            else:
+                books = []
         else:
             books = self.library.get_available_books()
         
